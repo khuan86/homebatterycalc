@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar PV Battery Charging Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Solar PV Battery Charging Calculator</h1>
+            <p class="subtitle">Calculate how long it takes to charge your battery with current solar generation</p>
+        </header>
+
+        <main class="calculator">
+            <div class="input-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Battery & Solar Information</h2>
+                        
+                        <div class="form-group">
+                            <label for="currentLevel" class="form-label">Current Battery Level</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="currentLevel" 
+                                    class="form-control" 
+                                    placeholder="e.g., 15.5"
+                                    step="0.1"
+                                    min="0"
+                                >
+                                <span class="input-unit">kWh</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="batterySize" class="form-label">Battery Size</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="batterySize" 
+                                    class="form-control" 
+                                    value="32.24"
+                                    step="0.1"
+                                    min="0.1"
+                                >
+                                <span class="input-unit">kWh</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="solarGeneration" class="form-label">Current Solar Generation</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="solarGeneration" 
+                                    class="form-control" 
+                                    placeholder="e.g., 5.2"
+                                    step="0.1"
+                                    min="0"
+                                >
+                                <span class="input-unit">kW</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Charging Time Results</h2>
+                        
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <div class="result-label">Time to 100%</div>
+                                <div class="result-value" id="hoursResult">--</div>
+                                <div class="result-unit">hours</div>
+                            </div>
+
+                            <div class="result-item">
+                                <div class="result-label">Time to 100%</div>
+                                <div class="result-value" id="minutesResult">--</div>
+                                <div class="result-unit">minutes</div>
+                            </div>
+
+                            <div class="result-item result-item--highlight">
+                                <div class="result-label">Estimated Completion</div>
+                                <div class="result-value" id="completionTime">--:-- --</div>
+                                <div class="result-unit">time</div>
+                            </div>
+                        </div>
+
+                        <div class="status-message" id="statusMessage"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Enter your current battery level and solar generation to see real-time charging calculations.</p>
+            <p>All calculations update automatically as you type.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
