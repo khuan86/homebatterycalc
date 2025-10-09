@@ -738,7 +738,7 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Custom styles for Solar PV Calculator */
+/* Custom styles for Solar Battery Management Calculator with VPP Revenue Planning */
 
 .header {
   text-align: center;
@@ -771,6 +771,24 @@ select.form-control {
   }
 }
 
+@media (min-width: 1024px) {
+  .calculator {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-32);
+  }
+}
+
+/* Battery info section - full width on larger screens */
+.battery-info-section {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .battery-info-section {
+    grid-column: 1 / 2;
+  }
+}
+
 .input-with-unit {
   position: relative;
   display: flex;
@@ -778,7 +796,7 @@ select.form-control {
 }
 
 .input-with-unit .form-control {
-  padding-right: 60px;
+  padding-right: 70px;
   flex: 1;
 }
 
@@ -791,12 +809,9 @@ select.form-control {
   pointer-events: none;
 }
 
-.results-section h2 {
-  color: var(--color-text);
-  margin-bottom: var(--space-20);
-}
-
-.input-section h2 {
+.charging-section h2,
+.vpp-section h2,
+.battery-info-section h2 {
   color: var(--color-text);
   margin-bottom: var(--space-20);
 }
@@ -805,6 +820,12 @@ select.form-control {
   display: grid;
   gap: var(--space-16);
   margin-bottom: var(--space-16);
+}
+
+@media (min-width: 480px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .result-item {
@@ -824,6 +845,22 @@ select.form-control {
 .result-item--highlight {
   background: var(--color-bg-3);
   border-color: var(--color-primary);
+}
+
+.result-item--revenue {
+  background: var(--color-bg-3);
+  border-color: var(--color-success);
+  border-width: 2px;
+}
+
+.result-item--revenue .result-value {
+  color: var(--color-success);
+  font-weight: var(--font-weight-bold);
+}
+
+.result-item--revenue .result-label {
+  color: var(--color-success);
+  font-weight: var(--font-weight-semibold);
 }
 
 .result-label {
@@ -900,6 +937,26 @@ select.form-control {
   margin: var(--space-8) 0;
 }
 
+/* VPP Section Specific Styling */
+.vpp-section {
+  background: var(--color-bg-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.vpp-section .card {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.vpp-results {
+  margin-top: var(--space-20);
+}
+
+.vpp-results .results-grid {
+  margin-bottom: var(--space-16);
+}
+
 /* Input focus states */
 .form-control:focus {
   border-color: var(--color-primary);
@@ -952,11 +1009,14 @@ select.form-control {
   .result-value {
     font-size: var(--font-size-2xl);
   }
-}
-
-/* Ensure dark mode by default */
-html {
-  color-scheme: dark;
+  
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .input-with-unit .form-control {
+    padding-right: 60px;
+  }
 }
 
 /* Enhanced card styling */
@@ -992,4 +1052,83 @@ html {
 .card h2 {
   border-bottom: 1px solid var(--color-border);
   padding-bottom: var(--space-12);
+}
+
+/* Revenue highlighting enhancements */
+.result-item--revenue {
+  position: relative;
+  overflow: hidden;
+}
+
+.result-item--revenue::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-success), var(--color-primary));
+}
+
+/* Error state styling */
+.form-control.error {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(var(--color-error-rgb), 0.2);
+}
+
+/* Success state for revenue display */
+.revenue-positive {
+  background: rgba(var(--color-success-rgb), 0.1);
+}
+
+/* VPP section icons */
+.vpp-section h2::before {
+  content: '⚡';
+  margin-right: var(--space-8);
+  font-size: var(--font-size-xl);
+}
+
+.charging-section h2::before {
+  content: '☀️';
+  margin-right: var(--space-8);
+  font-size: var(--font-size-xl);
+}
+
+.battery-info-section h2::before {
+  content: '🔋';
+  margin-right: var(--space-8);
+  font-size: var(--font-size-xl);
+}
+
+/* Responsive grid adjustments */
+@media (min-width: 1200px) {
+  .results-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .result-item--revenue {
+    grid-column: span 2;
+  }
+}
+
+/* Enhanced tooltip styling */
+.form-control[title] {
+  cursor: help;
+}
+
+/* Print styles */
+@media print {
+  .calculator {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-16) !important;
+  }
+  
+  .result-item {
+    break-inside: avoid;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: 1px solid var(--color-border);
+  }
 }

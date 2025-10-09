@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar PV Battery Charging Calculator</title>
+    <title>Solar Battery Management Calculator with VPP Revenue Planning</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <h1>Solar PV Battery Charging Calculator</h1>
-            <p class="subtitle">Calculate how long it takes to charge your battery with current solar generation</p>
+            <h1>Solar Battery Management Calculator</h1>
+            <p class="subtitle">Calculate charging times and VPP discharge revenue for optimal battery management</p>
         </header>
 
         <main class="calculator">
-            <div class="input-section">
+            <!-- Battery Information Section -->
+            <div class="battery-info-section">
                 <div class="card">
                     <div class="card__body">
-                        <h2>Battery & Solar Information</h2>
+                        <h2>Battery Information</h2>
                         
                         <div class="form-group">
                             <label for="currentLevel" class="form-label">Current Battery Level</label>
@@ -50,6 +51,31 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="reserveLevel" class="form-label">Reserve Level</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="reserveLevel" 
+                                    class="form-control" 
+                                    value="40"
+                                    step="1"
+                                    min="0"
+                                    max="100"
+                                >
+                                <span class="input-unit">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solar Charging Section -->
+            <div class="charging-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Solar Charging Calculator</h2>
+                        
+                        <div class="form-group">
                             <label for="solarGeneration" class="form-label">Current Solar Generation</label>
                             <div class="input-with-unit">
                                 <input 
@@ -63,15 +89,7 @@
                                 <span class="input-unit">kW</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="results-section">
-                <div class="card">
-                    <div class="card__body">
-                        <h2>Charging Time Results</h2>
-                        
                         <div class="results-grid">
                             <div class="result-item">
                                 <div class="result-label">Time to 100%</div>
@@ -92,15 +110,99 @@
                             </div>
                         </div>
 
-                        <div class="status-message" id="statusMessage"></div>
+                        <div class="status-message" id="chargingStatus"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VPP Discharge Planning Section -->
+            <div class="vpp-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>VPP Discharge Planning</h2>
+                        
+                        <div class="form-group">
+                            <label for="dischargeDuration" class="form-label">Discharge Duration</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="dischargeDuration" 
+                                    class="form-control" 
+                                    placeholder="e.g., 30"
+                                    step="1"
+                                    min="0"
+                                >
+                                <span class="input-unit">minutes</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dischargeRate" class="form-label">Discharge Rate</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="dischargeRate" 
+                                    class="form-control" 
+                                    placeholder="e.g., 10"
+                                    step="0.1"
+                                    min="0"
+                                >
+                                <span class="input-unit">kW</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exportPrice" class="form-label">Export Price</label>
+                            <div class="input-with-unit">
+                                <input 
+                                    type="number" 
+                                    id="exportPrice" 
+                                    class="form-control" 
+                                    placeholder="e.g., 1.26"
+                                    step="0.01"
+                                    min="0"
+                                >
+                                <span class="input-unit">$/kWh</span>
+                            </div>
+                        </div>
+
+                        <div class="vpp-results">
+                            <div class="results-grid">
+                                <div class="result-item">
+                                    <div class="result-label">Energy Discharged</div>
+                                    <div class="result-value" id="energyDischarged">--</div>
+                                    <div class="result-unit">kWh</div>
+                                </div>
+
+                                <div class="result-item">
+                                    <div class="result-label">Final Battery Level</div>
+                                    <div class="result-value" id="finalBatteryLevel">--</div>
+                                    <div class="result-unit">kWh</div>
+                                </div>
+
+                                <div class="result-item">
+                                    <div class="result-label">Battery Usage</div>
+                                    <div class="result-value" id="batteryUsage">--</div>
+                                    <div class="result-unit">%</div>
+                                </div>
+
+                                <div class="result-item result-item--revenue">
+                                    <div class="result-label">Total Revenue</div>
+                                    <div class="result-value" id="totalRevenue">$--</div>
+                                    <div class="result-unit">Energy × Price</div>
+                                </div>
+                            </div>
+
+                            <div class="status-message" id="vppStatus"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
         <footer class="footer">
-            <p>Enter your current battery level and solar generation to see real-time charging calculations.</p>
-            <p>All calculations update automatically as you type.</p>
+            <p>Plan your solar charging and VPP discharge strategies with real-time calculations.</p>
+            <p>All calculations update automatically as you adjust parameters.</p>
         </footer>
     </div>
 
